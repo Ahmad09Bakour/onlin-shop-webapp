@@ -2,6 +2,25 @@ window.OnlineShope = {
 
     apiUrl: "http://localhost:8085",
 
+    addProductToCart: function (productId) {
+
+        let data = {
+            customerId: 4,
+            productId: [productId]
+        };
+
+        $.ajax({
+            url: OnlineShope.apiUrl + "/carts",
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function (response) {
+            console.log('added product to cart');
+        });
+
+
+    },
+
     getProducts: function () {
 
         $.ajax({
@@ -36,11 +55,21 @@ window.OnlineShope = {
                         </div>  
                         
                         <div class="product-option-shop">
-                            <a class="add_to_cart_button" data-quantity="1" data-product_id="${product.id}" rel="nofollow" href="/shop.html">Add to cart</a>
+                            <a class="add_to_cart_button" data-quantity="1" data-product_id="${product.id}" rel="nofollow" href="/onlin-shop-webapp/shop.html">Add to cart</a>
                         </div>                       
                     </div>
                 </div>`
     },
+
+    bindEvents: function () {
+        $('#products-container').delegate('.add_to_cart_button', 'click', function () {
+            event.preventDefault();
+            let id = $(this).data("product_id");
+            OnlineShope.addProductToCart(id);
+
+        })
+    }
 };
 
 OnlineShope.getProducts();
+OnlineShope.bindEvents();

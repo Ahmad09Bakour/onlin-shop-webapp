@@ -5,8 +5,9 @@ window.OnlineShope = {
     addProductToCart: function (productId) {
 
         let data = {
-            customerId: 4,
-            productId: [productId]
+            customerId: 2, // we're setting the ID directly from here, not dynamically by the service from the DB, because
+            // we only want to test it now... and i will work on it properly in the future to set all the functions correctly
+            productIds: [productId]
         };
 
         $.ajax({
@@ -16,6 +17,8 @@ window.OnlineShope = {
             data: JSON.stringify(data)
         }).done(function (response) {
             console.log('added product to cart');
+            window.location.replace("/onlin-shop-webapp/cart.html"); // here is the url that we're telling the
+            // service to redirect us once the button is pressed
         });
 
 
@@ -55,9 +58,9 @@ window.OnlineShope = {
                         </div>  
                         
                         <div class="product-option-shop">
-                            <a class="add_to_cart_button" data-quantity="1" data-product_id="${product.id}" rel="nofollow" href="/onlin-shop-webapp/shop.html">Add to cart</a>
-                        </div>                       
-                    </div>
+                            <a class="add_to_cart_button" data-quantity="1" data-product_id="${product.id}" rel="nofollow" href="#">Add to cart</a>
+                        </div>                                        <!--We're no redirecting the user anywhere from here, here we only put #-->
+                    </div>                                           <!--but we redirect the user once the button is pressed in the function line 20-->
                 </div>`
     },
 
